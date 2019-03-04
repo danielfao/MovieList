@@ -6,5 +6,5 @@ target 'MovieList' do
   use_frameworks!
 
   # Pods for MovieList
-
+  pod 'Alamofire', '~> 4.7'
 end
