@@ -1,0 +1,10 @@
+/* 
+  Localizable.strings
+  MovieList
+
+  Created by Daniel Oliveira on 04/03/19.
+  Copyright © 2019 Daniel Oliveira. All rights reserved.
+*/
+
+// MARK: - Geral
+"navigation_movie_list_title" = "Lista de Filmes";
