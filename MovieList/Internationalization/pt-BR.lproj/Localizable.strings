@@ -8,3 +8,5 @@
 
 // MARK: - Geral
 "navigation_movie_list_title" = "Lista de Filmes";
+"average_rate_text" = "Nota: %d";
+"release_date_text" = "Lançamento: %@";

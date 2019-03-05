@@ -28,7 +28,7 @@ class MovieListViewController: UIViewController {
         super.viewDidLoad()
 
         //Navigation Bar
-        self.navigationItem.title = NSLocalizedString("navigation_movie_list_title", comment: "")
+        self.navigationItem.title = String.localize("navigation_movie_list_title")
         
         MovieListService.getMovieList { (movies) in
             self.movies = movies
