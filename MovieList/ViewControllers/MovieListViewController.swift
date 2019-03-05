@@ -20,23 +20,32 @@ class MovieListViewController: UIViewController {
         }
     }
     
+    // MARK: - Variables
+    private var movies: [MovieList] = []
+    
     // MARK: - Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
 
         //Navigation Bar
         self.navigationItem.title = NSLocalizedString("navigation_movie_list_title", comment: "")
+        
+        MovieListService.getMovieList { (movies) in
+            self.movies = movies
+            self.tableView.reloadData()
+        }
     }
 }
 
 // MARK: - UITableViewDataSource
 extension MovieListViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 8
+        return self.movies.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if let cell = tableView.dequeueReusableCell(withIdentifier: String(describing: MovieListTableViewCell.self), for: indexPath) as? MovieListTableViewCell {
+            cell.setupCell(movies: self.movies[indexPath.row])
             return cell
         }
             return UITableViewCell()

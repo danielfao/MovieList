@@ -11,6 +11,7 @@ import Alamofire
 
 private struct NetworkConstants {
     static let baseURL = "https://desafio-mobile.nyc3.digitaloceanspaces.com/"
+    static let movieListURL = "movies"
 }
 
 enum RequestType {
@@ -20,7 +21,7 @@ enum RequestType {
     func getURL() -> String {
         switch self {
         case .movieList:
-            return "\(NetworkConstants.baseURL)movies"
+            return "\(NetworkConstants.baseURL)\(NetworkConstants.movieListURL)"
         }
     }
     

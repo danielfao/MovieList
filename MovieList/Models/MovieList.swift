@@ -26,11 +26,16 @@ class MovieList {
                 return nil
         }
         
+        var genresArray: [String] = []
+        for value in genres {
+            genresArray.append(value)
+        }
+        
         self.id = id
         self.averageRate = averageRate
         self.title = title
         self.posterURL = posterURL
-        self.genres = genres
+        self.genres = genresArray
         self.releaseDate = releaseDate
     }
 }

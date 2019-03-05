@@ -17,8 +17,8 @@ class MovieListService {
             }
             
             var movies : [MovieList] = []
-            for movie in movieListDicts {
-                if let movie = MovieList.init(movieListDict: movie) {
+            for movieList in movieListDicts {
+                if let movie = MovieList.init(movieListDict: movieList) {
                     movies.append(movie)
                 }
             }
