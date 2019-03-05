@@ -44,17 +44,23 @@ extension MovieListViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if let cell = tableView.dequeueReusableCell(withIdentifier: String(describing: MovieListTableViewCell.self), for: indexPath) as? MovieListTableViewCell {
-            cell.setupCell(movies: self.movies[indexPath.row])
-            return cell
-        }
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: String(describing: MovieListTableViewCell.self), for: indexPath) as? MovieListTableViewCell else {
             return UITableViewCell()
+        }
+        cell.setupCell(movies: self.movies[indexPath.row])
+        return cell
     }
-    
-    
 }
 
 // MARK: - UITableViewDelegate
 extension MovieListViewController: UITableViewDelegate {
-    
+    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        let movies = self.movies[indexPath.row]
+        movies.downloadImage { (image) in
+            guard let cell = self.tableView.cellForRow(at: indexPath) as? MovieListTableViewCell else {
+                return
+            }
+            cell.setupCell(movies: movies)
+        }
+    }
 }

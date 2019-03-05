@@ -22,6 +22,8 @@ class MovieListTableViewCell: UITableViewCell {
     @IBOutlet weak var averageRateLabel: UILabel!
     @IBOutlet weak var separatorView: UIView!
     
+    // MARK: - Variables
+    private var genreText: String = ""
     
     // MARK: - Life Cycle
     override func awakeFromNib() {
@@ -35,12 +37,12 @@ class MovieListTableViewCell: UITableViewCell {
     }
     
     func setupCell(movies: MovieList) {
+        self.posterView.image = movies.image
         self.titleLabel.text = movies.title
-        var genreText: String = ""
         for genre in movies.genres {
-            genreText += genre + " "
+            self.genreText += genre + ", "
         }
-        self.genreLabel.text = "\(genreText)"
+        self.genreLabel.text = "\(self.genreText)"
         self.releaseDataLabel.text = movies.releaseDate
         self.averageRateLabel.text = String(movies.averageRate)
     }
