@@ -13,7 +13,7 @@ class NetworkService {
     private init(){}
     
     // MARK: - Request
-    class func request(type: RequestType, parameters: Parameters?, completion: ((_ success: Bool, _ data: Any?)->())?) {
+    class func request(type: RequestType, parameters: Parameters? = nil, completion: ((_ success: Bool, _ data: Any?)->())?) {
         Alamofire.request(type.getURL(), method: type.getHTTPMethod(), parameters: parameters, encoding: type.getEncoding(), headers: type.getHeaders()).responseJSON { (response) in
             guard let statusCode = response.response?.statusCode else {
                 completion?(false, nil)

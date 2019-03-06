@@ -13,20 +13,19 @@ class MovieList {
     let id: Int
     let averageRate: Double
     let title: String
-    let posterURL: String
-    private (set) var image: UIImage?
+    let posterUrl: URL?
     let genres: [String]
     let releaseDate: String
+    private (set) var image: UIImage?
     private var imageDownloadTask: URLSessionTask?
     
     // MARK: - Initialization
     init?(movieListDict: [String : Any]) {
-        guard let id = movieListDict["id"] as? Int,
-            let averageRate = movieListDict["vote_average"] as? Double,
-            let title = movieListDict["title"] as? String,
-            let posterURL = movieListDict["poster_url"] as? String,
-            let genres = movieListDict["genres"] as? [String],
-            let releaseDate = movieListDict["release_date"] as? String else {
+        guard let id = movieListDict[NetworkMovieListConstants.id] as? Int,
+            let averageRate = movieListDict[NetworkMovieListConstants.averageRate] as? Double,
+            let title = movieListDict[NetworkMovieListConstants.title] as? String,
+            let genres = movieListDict[NetworkMovieListConstants.genres] as? [String],
+            let releaseDate = movieListDict[NetworkMovieListConstants.releaseDate] as? String else {
                 return nil
         }
         
@@ -35,17 +34,22 @@ class MovieList {
             genresArray.append(value)
         }
         
+        if let imageURLString = movieListDict[NetworkMovieListConstants.posterUrl] as? String, let posterURL = URL(string: imageURLString) {
+            self.posterUrl = posterURL
+        } else {
+            self.posterUrl = nil
+        }
+        
         self.id = id
         self.averageRate = averageRate
         self.title = title
-        self.posterURL = posterURL
         self.genres = genresArray
         self.releaseDate = releaseDate
     }
     
     // MARK: - Image
     func downloadImage(completion: ((_ image: UIImage?) -> ())?) {
-        guard let imageURL = URL(string: self.posterURL), self.image == nil, self.imageDownloadTask == nil else {
+        guard let imageURL = self.posterUrl, self.image == nil, self.imageDownloadTask == nil else {
             completion?(nil)
             return
         }
