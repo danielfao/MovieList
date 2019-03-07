@@ -8,5 +8,14 @@
 
 // MARK: - General
 "navigation_movie_list_title" = "Movie List";
+"navigation_movie_detail_title" = "%@";
 "average_rate_text" = "Rate: %@";
 "release_date_text" = "Release: %@";
+"budget_text" = "Budget: %@";
+"budget_not_provided" = "Budget: Not provided";
+"revenue_text" = "Revenue: %@";
+"revenue_not_provided" = "Revenue: Not provided";
+"website_text" = "Website: %@";
+"web_site_not_provided" = "Website: Not provided";
+"original_movie_title" = "Original title\n%@";
+"genres_title" = "Genres";

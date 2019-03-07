@@ -21,7 +21,7 @@ class MovieListViewController: UIViewController {
     }
     
     // MARK: - Variables
-    private var movies: [MovieList] = []
+    private var movies: [Movie] = []
     
     // MARK: - Life Cycle
     override func viewDidLoad() {
@@ -56,11 +56,21 @@ extension MovieListViewController: UITableViewDataSource {
 extension MovieListViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         let movies = self.movies[indexPath.row]
-        movies.downloadImage { (image) in
+        movies.downloadPosterImage { (image) in
             guard let cell = self.tableView.cellForRow(at: indexPath) as? MovieListTableViewCell else {
                 return
             }
             cell.setupCell(movies: movies)
         }
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
+            let movie = self.movies[indexPath.row]
+            guard let viewController = UIStoryboard(name: .MovieDetail).instantiateViewController(withIdentifier: ViewControllerName.MovieDetailView) as? MovieDetailViewController else {
+                return
+            }
+            viewController.movie = movie
+            self.navigationController?.pushViewController(viewController, animated: true)
     }
 }

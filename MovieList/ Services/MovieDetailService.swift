@@ -9,20 +9,15 @@
 import Foundation
 
 class MovieDetailService {
-    class func getMovieList(id: Int, completion: @escaping([MovieList])->()) {
-        NetworkService.request(type: .movieDetail(id: id), parameters: nil) { (success, data) in
-            guard let movieDetailDicts = data as? [[String : Any]] else {
-                completion([])
+    class func getMovieDetail(movie: Movie, completion: @escaping()->()) {
+        NetworkService.request(type: .movieDetail(id: movie.id)) { (success, data) in
+            guard let movieDetailDict = data as? [String : Any] else {
+                completion()
                 return
             }
             
-            var movies : [MovieList] = []
-            for movieDetail in movieDetailDicts {
-                if let movie = MovieList.init(movieListDict: movieDetail) {
-                    movies.append(movie)
-                }
-            }
-            completion(movies)
+            movie.update(dict: movieDetailDict)
+            completion()
         }
     }
 }

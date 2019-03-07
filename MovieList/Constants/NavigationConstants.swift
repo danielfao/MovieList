@@ -10,8 +10,10 @@ import Foundation
 
 enum StoryboardName: String {
     case MovieList = "MovieList"
+    case MovieDetail = "MovieDetail"
 }
 
 struct ViewControllerName {
     static let MovieListView = "MovieListViewController"
+    static let MovieDetailView = "MovieDetailViewController"
 }

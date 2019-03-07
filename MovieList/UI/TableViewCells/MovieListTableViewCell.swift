@@ -55,22 +55,15 @@ class MovieListTableViewCell: UITableViewCell {
     }
     
     // MARK: - Setup cell
-    func setupCell(movies: MovieList) {
-        self.posterView.image = movies.image
+    func setupCell(movies: Movie) {
+        self.posterView.image = movies.posterImage
         self.titleLabel.text = movies.title
         self.releaseDataLabel.text = String(format: String.localize("release_date_text"), movies.releaseDate)
         
         let averageRateText = String(movies.averageRate)
         self.averageRateLabel.text = String(format: String.localize("average_rate_text"), averageRateText)
         
-        var genreText: String = ""
-        for genre in movies.genres {
-            if !genreText.contains(genre) {
-                genreText += genre + ", "
-            }
-        }
-        genreText = String(genreText.dropLast(2))
-        self.genreLabel.text = "\(genreText)"
+        self.genreLabel.text = "\(movies.genres.joined(separator: ", "))"
     }
     
 }
