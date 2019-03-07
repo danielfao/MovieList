@@ -10,12 +10,27 @@ import UIKit
 
 class MovieListTableViewCell: UITableViewCell {
     // MARK: - IBOutlets
+    @IBOutlet weak var shadowView: UIView! {
+        didSet {
+            self.shadowView.backgroundColor = UIColor.white
+            self.shadowView.alpha = 0.2
+            self.shadowView.layer.shadowColor = UIColor.black.cgColor
+            self.shadowView.layer.shadowRadius = 5.0
+            self.shadowView.layer.shadowOpacity = 0.5
+        }
+    }
+    @IBOutlet weak var cornerRadiusView: UIView! {
+        didSet {
+            self.cornerRadiusView.backgroundColor = UIColor.white
+            self.cornerRadiusView.layer.cornerRadius = 5
+            self.cornerRadiusView.layer.masksToBounds = true
+        }
+    }
     @IBOutlet weak var posterView: UIImageView! {
         didSet {
             self.posterView.contentMode = .scaleAspectFit
-            self.posterView.layer.shadowColor = UIColor.black.cgColor
-            self.posterView.layer.shadowRadius = 5.0
-            self.posterView.layer.shadowOpacity = 0.5
+            self.posterView.layer.cornerRadius = 5
+            self.posterView.clipsToBounds = true
         }
     }
     @IBOutlet weak var titleLabel: UILabel! {

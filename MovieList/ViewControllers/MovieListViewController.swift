@@ -17,6 +17,7 @@ class MovieListViewController: UIViewController {
             self.tableView.delegate = self
             self.tableView.register(MovieListTableViewCell.self, forCellReuseIdentifier: String(describing: MovieListTableViewCell.self))
             self.tableView.register(UINib(nibName: String(describing: MovieListTableViewCell.self), bundle: nil), forCellReuseIdentifier: String(describing: MovieListTableViewCell.self))
+            self.tableView.separatorStyle = .none
         }
     }
     
