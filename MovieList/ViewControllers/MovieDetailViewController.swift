@@ -10,6 +10,19 @@ import UIKit
 
 class MovieDetailViewController: UIViewController {
     // MARK: - IBOutlets
+    @IBOutlet weak var loaderContainerView: UIView! {
+        didSet {
+            self.loaderContainerView.isHidden = true
+            self.loaderContainerView.backgroundColor = UIColor.lightGray
+            self.loaderContainerView.layer.cornerRadius = 8.0
+        }
+    }
+    @IBOutlet weak var activityIndicator: UIActivityIndicatorView! {
+        didSet {
+            self.activityIndicator.isHidden = true
+            self.activityIndicator.hidesWhenStopped = true
+        }
+    }
     @IBOutlet weak var contentView: UIView!
     @IBOutlet weak var backdropImageView: UIImageView! {
         didSet {
@@ -51,6 +64,7 @@ class MovieDetailViewController: UIViewController {
     }
     @IBOutlet weak var overviewTitleLabel: UILabel! {
         didSet {
+            self.overviewTitleLabel.text = String.localize("overview_title")
             self.overviewTitleLabel.font = UIFont.systemFont(ofSize: 17, weight: .bold)
             self.overviewTitleLabel.tintColor = UIColor.darkGray
         }
@@ -64,6 +78,7 @@ class MovieDetailViewController: UIViewController {
     }
     @IBOutlet weak var genresTitleLabel: UILabel! {
         didSet {
+            self.genresTitleLabel.text = String.localize("genres_title")
             self.genresTitleLabel.font = UIFont.systemFont(ofSize: 17, weight: .bold)
             self.genresTitleLabel.tintColor = UIColor.darkGray
         }
@@ -99,17 +114,20 @@ class MovieDetailViewController: UIViewController {
     // MARK: - Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
+        let dispatchGroup = DispatchGroup()
         
         // Navigation Bar
         self.navigationItem.title = String(format: String.localize("navigation_movie_detail_title"), self.movie?.title ?? "")
-        
+    
+        self.loaderIsEnabled(status: true)
         // Populating fields
         if let movie = self.movie {
-            movie.downloadBackDropImage { (backdrop) in
-                self.backdropImageView.image = backdrop
-            }
+            dispatchGroup.enter()
             MovieDetailService.getMovieDetail(movie: movie) {
                 self.posterImageView.image = movie.posterImage
+                if let backdropUrl = movie.backDropUrl {
+                    self.downloadBackdropImage(url: backdropUrl)
+                }
                 self.titleLabel.text = movie.title
                 if let originalTitle = movie.originalTitle {
                     self.originalTitleLabel.text = String(format: String.localize("original_movie_title"), originalTitle)
@@ -121,7 +139,7 @@ class MovieDetailViewController: UIViewController {
                 self.genresTextLabel.text = "\(movie.genres.joined(separator: ", "))"
                 if let budget = movie.budget {
                     if budget != 0 {
-                        let budgetFormatted = currencyFormatter(value: budget)
+                        let budgetFormatted = self.currencyFormatter(value: budget)
                         self.budgetLabel.text = String(format: String.localize("budget_text"), budgetFormatted)
                     } else {
                         self.budgetLabel.text = String.localize("budget_not_provided")
@@ -129,7 +147,7 @@ class MovieDetailViewController: UIViewController {
                 }
                 if let revenue = movie.revenue {
                     if revenue != 0 {
-                        let revenueFormatted = currencyFormatter(value: revenue)
+                        let revenueFormatted = self.currencyFormatter(value: revenue)
                         self.revenueLabel.text = String(format: String.localize("revenue_text"), revenueFormatted)
                     } else {
                         self.revenueLabel.text = String.localize("revenue_not_provided")
@@ -140,18 +158,39 @@ class MovieDetailViewController: UIViewController {
                 } else {
                     self.homepageLabel.text = String.localize("web_site_not_provided")
                 }
+                dispatchGroup.leave()
             }
         }
+        dispatchGroup.notify(queue: .main) {
+            self.loaderIsEnabled(status: false)
+        }
     }
-}
-
-func currencyFormatter(value: Any) -> String {
-    let formatter = NumberFormatter()
-    formatter.numberStyle = .currency
-    formatter.locale = Locale(identifier: "en_US")
     
-    guard let value = value as? NSNumber, let valueFormatted = formatter.string(from: value) else {
-        return ""
+    // MARK: - Functions
+    private func currencyFormatter(value: Any) -> String {
+        let formatter = NumberFormatter()
+        formatter.numberStyle = .currency
+        formatter.locale = Locale(identifier: "en_US")
+        
+        guard let value = value as? NSNumber, let valueFormatted = formatter.string(from: value) else {
+            return ""
+        }
+        return valueFormatted
     }
-    return valueFormatted
+
+    private func downloadBackdropImage(url: URL) {
+        self.backdropImageView.kf.setImage(with: url)
+    }
+    
+    private func loaderIsEnabled(status: Bool) {
+        if status {
+            self.loaderContainerView.isHidden = false
+            self.activityIndicator.isHidden = false
+            self.activityIndicator.startAnimating()
+        } else {
+            self.loaderContainerView.isHidden = true
+            self.activityIndicator.isHidden = true
+            self.activityIndicator.stopAnimating()
+        }
+    }
 }

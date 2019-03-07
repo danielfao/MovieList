@@ -17,5 +17,6 @@
 "revenue_not_provided" = "Revenue: Not provided";
 "website_text" = "Website: %@";
 "web_site_not_provided" = "Website: Not provided";
-"original_movie_title" = "Original title\n%@";
+"original_movie_title" = "Original Title\n%@";
 "genres_title" = "Genres";
+"overview_title" = "Overview";

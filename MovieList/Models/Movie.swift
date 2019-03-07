@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Kingfisher
 
 class Movie {
     // MARK: - Variables
@@ -43,8 +44,8 @@ class Movie {
             genresArray.append(value)
         }
         
-        if let imageURLString = movieListDict[NetworkMovieListConstants.posterUrl] as? String, let posterURL = URL(string: imageURLString) {
-            self.posterUrl = posterURL
+        if let imageURLString = movieListDict[NetworkMovieListConstants.posterUrl] as? String, let posterUrl = URL(string: imageURLString) {
+            self.posterUrl = posterUrl
         } else {
             self.posterUrl = nil
         }
@@ -63,8 +64,8 @@ class Movie {
         self.overview = dict[NetworkMovieDetailConstants.overview] as? String ?? nil
         self.revenue = dict[NetworkMovieDetailConstants.revenue] as? Int ?? nil
         
-        if let backDropUrlString = dict[NetworkMovieDetailConstants.backDropUrl] as? String, let backDropImage = URL(string: backDropUrlString) {
-            self.backDropUrl = backDropImage
+        if let backDropUrlString = dict[NetworkMovieDetailConstants.backDropUrl] as? String, let backDropUrl = URL(string: backDropUrlString) {
+            self.backDropUrl = backDropUrl
         } else {
             self.backDropUrl = nil
         }
@@ -86,19 +87,6 @@ class Movie {
             self.posterImage = image
             completion?(image)
             self.imagePosterDownloadTask = nil
-        })
-    }
-    
-    func downloadBackDropImage(completion: ((_ image: UIImage?) -> ())?) {
-        guard let imageUrl = self.backDropUrl, self.backDropImage == nil, self.imageBackdropDownloadTask == nil else {
-            completion?(nil)
-            return
-        }
-        
-        self.imageBackdropDownloadTask = NetworkService.downloadImage(url: imageUrl, completion: { (image) in
-            self.backDropImage = image
-            completion?(image)
-            self.imageBackdropDownloadTask = nil
         })
     }
 }

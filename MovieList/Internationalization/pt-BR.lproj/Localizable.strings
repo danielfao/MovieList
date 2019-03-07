@@ -9,7 +9,7 @@
 // MARK: - Geral
 "navigation_movie_list_title" = "Lista de Filmes";
 "navigation_movie_detail_title" = "%@";
-"average_rate_text" = "Nota: %d";
+"average_rate_text" = "Nota: %@";
 "release_date_text" = "Lançamento: %@";
 "budget_text" = "Orçamento: %@";
 "budget_not_provided" = "Orçamento: Não fornecido";
@@ -17,6 +17,6 @@
 "revenue_not_provided" = "Receita: Não fornecido";
 "website_text" = "Website: %@";
 "web_site_not_provided" = "Website: Não fornecido";
-"original_movie_title" = "Título original\n %@";
-"genres_title" = "Generos";
-
+"original_movie_title" = "Título Original\n %@";
+"genres_title" = "Gêneros";
+"overview_title" = "Visão Geral";

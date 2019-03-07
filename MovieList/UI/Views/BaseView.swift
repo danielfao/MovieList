@@ -2,26 +2,25 @@
 //  BaseView.swift
 //  MovieList
 //
-//  Created by Daniel Oliveira on 04/03/19.
+//  Created by Daniel Oliveira on 07/03/19.
 //  Copyright © 2019 Daniel Oliveira. All rights reserved.
 //
 
 import UIKit
 
 class BaseView: UIView {
-    
     //MARK: - Initialization Functions
     override init(frame: CGRect) {
         super.init(frame: frame)
-        setUpView()
+        setupView()
     }
     
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
-        setUpView()
+        setupView()
     }
     
-    func setUpView() {
+    func setupView() {
         let view = viewFromNibForClass()
         view.frame = bounds
         
