@@ -10,19 +10,7 @@ import UIKit
 
 class MovieDetailViewController: UIViewController {
     // MARK: - IBOutlets
-    @IBOutlet weak var loaderContainerView: UIView! {
-        didSet {
-            self.loaderContainerView.isHidden = true
-            self.loaderContainerView.backgroundColor = UIColor.lightGray
-            self.loaderContainerView.layer.cornerRadius = 8.0
-        }
-    }
-    @IBOutlet weak var activityIndicator: UIActivityIndicatorView! {
-        didSet {
-            self.activityIndicator.isHidden = true
-            self.activityIndicator.hidesWhenStopped = true
-        }
-    }
+    @IBOutlet weak var loaderView: LoaderView!
     @IBOutlet weak var contentView: UIView!
     @IBOutlet weak var backdropImageView: UIImageView! {
         didSet {
@@ -119,7 +107,7 @@ class MovieDetailViewController: UIViewController {
         // Navigation Bar
         self.navigationItem.title = String(format: String.localize("navigation_movie_detail_title"), self.movie?.title ?? "")
     
-        self.loaderIsEnabled(status: true)
+        self.loaderView.loaderIsEnabled(status: true)
         // Populating fields
         if let movie = self.movie {
             dispatchGroup.enter()
@@ -162,7 +150,7 @@ class MovieDetailViewController: UIViewController {
             }
         }
         dispatchGroup.notify(queue: .main) {
-            self.loaderIsEnabled(status: false)
+            self.loaderView.loaderIsEnabled(status: false)
         }
     }
     
@@ -182,15 +170,15 @@ class MovieDetailViewController: UIViewController {
         self.backdropImageView.kf.setImage(with: url)
     }
     
-    private func loaderIsEnabled(status: Bool) {
-        if status {
-            self.loaderContainerView.isHidden = false
-            self.activityIndicator.isHidden = false
-            self.activityIndicator.startAnimating()
-        } else {
-            self.loaderContainerView.isHidden = true
-            self.activityIndicator.isHidden = true
-            self.activityIndicator.stopAnimating()
-        }
-    }
+//    private func loaderIsEnabled(status: Bool) {
+//        if status {
+//            self.loaderContainerView.isHidden = false
+//            self.activityIndicator.isHidden = false
+//            self.activityIndicator.startAnimating()
+//        } else {
+//            self.loaderContainerView.isHidden = true
+//            self.activityIndicator.isHidden = true
+//            self.activityIndicator.stopAnimating()
+//        }
+//    }
 }

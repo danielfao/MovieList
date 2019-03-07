@@ -26,13 +26,13 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "MovieList/ViewControllers/MovieDetailViewController.swift"
-            timestampString = "573659363.058431"
+            timestampString = "573661274.054643"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "188"
-            endingLineNumber = "188"
-            landmarkName = "loaderIsEnabled(status:)"
-            landmarkType = "7">
+            startingLineNumber = "184"
+            endingLineNumber = "184"
+            landmarkName = "MovieDetailViewController"
+            landmarkType = "3">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -42,13 +42,13 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "MovieList/ViewControllers/MovieDetailViewController.swift"
-            timestampString = "573659363.058561"
+            timestampString = "573661274.054711"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "192"
-            endingLineNumber = "192"
-            landmarkName = "loaderIsEnabled(status:)"
-            landmarkType = "7">
+            startingLineNumber = "184"
+            endingLineNumber = "184"
+            landmarkName = "MovieDetailViewController"
+            landmarkType = "3">
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>
