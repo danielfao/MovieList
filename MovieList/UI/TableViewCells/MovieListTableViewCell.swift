@@ -71,7 +71,12 @@ class MovieListTableViewCell: UITableViewCell {
     
     // MARK: - Setup cell
     func setupCell(movies: Movie) {
-        self.posterView.image = movies.posterImage
+        if movies.posterImage != nil {
+            self.posterView.image = movies.posterImage
+        } else {
+            self.posterView.image = ImageConstants.EmptyStateImage
+        }
+        
         self.titleLabel.text = movies.title
         self.releaseDataLabel.text = String(format: String.localize("release_date_text"), movies.releaseDate)
         

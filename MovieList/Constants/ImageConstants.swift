@@ -10,4 +10,5 @@ import UIKit
 
 struct ImageConstants {
     static let EmptyStateAlert = UIImage(named: "imgBenefitAdded")
+    static let EmptyStateImage = UIImage(named: "imgMissionFailed")
 }
