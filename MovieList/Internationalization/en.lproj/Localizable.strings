@@ -20,3 +20,5 @@
 "original_movie_title" = "Original Title\n%@";
 "genres_title" = "Genres";
 "overview_title" = "Overview";
+"no_internet_connection_title" = "No Internet Connection";
+"no_internet_connection_message" = "You need to be connected to the internet to access the content";

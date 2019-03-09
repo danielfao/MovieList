@@ -20,21 +20,65 @@ class MovieListViewController: UIViewController {
             self.tableView.separatorStyle = .none
         }
     }
+    @IBOutlet weak var loaderView: LoaderView!
+    @IBOutlet weak var emptyStateView: EmptyStateView! {
+        didSet {
+            self.emptyStateView.isHidden = true
+        }
+    }
     
     // MARK: - Variables
     private var movies: [Movie] = []
+    private let dispatchGroup = DispatchGroup()
     
     // MARK: - Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        //Navigation Bar
+        
+        // Navigation Bar
         self.navigationItem.title = String.localize("navigation_movie_list_title")
         
-        MovieListService.getMovieList { (movies) in
-            self.movies = movies
-            self.tableView.reloadData()
+        // Notifications
+        NotificationCenter.default.addObserver(self, selector: #selector(internetConnected), name: .InternetConnectionReachable, object: nil)
+        
+        self.loaderView.loaderIsEnabled(status: true)
+       
+        self.getMovies()
+        
+        self.dispatchGroup.notify(queue: .main) {
+            self.loaderView.loaderIsEnabled(status: false)
         }
+    }
+    
+    // MARK: - Functions
+    private func getMovies() {
+        MovieListService.getMovieList { (movies) in
+            self.dispatchGroup.enter()
+            self.movies = movies
+            if movies.isEmpty {
+                self.showEmptyState()
+                self.emptyStateView.configureEmptyState(title: EmptyStateMessage.NoInternetConnection, message: EmptyStateMessage.NoInternetConnectionMessage, image: ImageConstants.EmptyStateAlert, messageShouldShow: true)
+            } else {
+                self.hideEmptyState()
+                self.tableView.reloadData()
+            }
+            self.dispatchGroup.leave()
+        }
+    }
+    
+    private func showEmptyState() {
+        self.tableView.isHidden = true
+        self.emptyStateView.isHidden = false
+    }
+    
+    private func hideEmptyState() {
+        self.tableView.isHidden = false
+        self.emptyStateView.isHidden = true
+    }
+    
+    // MARK: - Listners
+    @objc func internetConnected() {
+        self.getMovies()
     }
 }
 

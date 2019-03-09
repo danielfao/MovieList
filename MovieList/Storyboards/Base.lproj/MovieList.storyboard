@@ -22,18 +22,34 @@
                                 <rect key="frame" x="0.0" y="64" width="375" height="603"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </tableView>
+                            <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="D07-xR-pWa" customClass="LoaderView" customModule="MovieList" customModuleProvider="target">
+                                <rect key="frame" x="147" y="293" width="80" height="80"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gaP-w9-cP6" customClass="EmptyStateView" customModule="MovieList" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="64" width="375" height="603"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
+                            <constraint firstItem="D07-xR-pWa" firstAttribute="centerX" secondItem="uT8-5O-yGC" secondAttribute="centerX" id="8vV-Eq-Zwt"/>
                             <constraint firstItem="uT8-5O-yGC" firstAttribute="trailing" secondItem="fB0-kS-i9f" secondAttribute="trailing" id="IAC-nU-6Nd"/>
                             <constraint firstItem="fB0-kS-i9f" firstAttribute="top" secondItem="uT8-5O-yGC" secondAttribute="top" id="Md2-FN-rtu"/>
+                            <constraint firstItem="uT8-5O-yGC" firstAttribute="bottom" secondItem="gaP-w9-cP6" secondAttribute="bottom" id="XDk-LG-5RB"/>
                             <constraint firstItem="fB0-kS-i9f" firstAttribute="leading" secondItem="uT8-5O-yGC" secondAttribute="leading" id="bMB-0N-ua3"/>
+                            <constraint firstItem="D07-xR-pWa" firstAttribute="centerY" secondItem="uT8-5O-yGC" secondAttribute="centerY" id="cMV-Pt-yPF"/>
+                            <constraint firstItem="uT8-5O-yGC" firstAttribute="trailing" secondItem="gaP-w9-cP6" secondAttribute="trailing" id="ilc-x3-cwD"/>
+                            <constraint firstItem="gaP-w9-cP6" firstAttribute="top" secondItem="uT8-5O-yGC" secondAttribute="top" id="n5J-NK-lS1"/>
                             <constraint firstItem="uT8-5O-yGC" firstAttribute="bottom" secondItem="fB0-kS-i9f" secondAttribute="bottom" id="pZD-x6-hlL"/>
+                            <constraint firstItem="gaP-w9-cP6" firstAttribute="leading" secondItem="uT8-5O-yGC" secondAttribute="leading" id="vY1-S7-LGD"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="uT8-5O-yGC"/>
                     </view>
                     <navigationItem key="navigationItem" id="E4l-VK-cBI"/>
                     <connections>
+                        <outlet property="emptyStateView" destination="gaP-w9-cP6" id="XW6-IC-gon"/>
+                        <outlet property="loaderView" destination="D07-xR-pWa" id="XOc-yE-cYo"/>
                         <outlet property="tableView" destination="fB0-kS-i9f" id="itL-93-rzE"/>
                     </connections>
                 </viewController>

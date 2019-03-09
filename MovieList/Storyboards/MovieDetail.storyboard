@@ -149,6 +149,10 @@
                                         <rect key="frame" x="147.5" y="234" width="80" height="80"/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     </view>
+                                    <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="jSQ-dW-eGE" customClass="EmptyStateView" customModule="MovieList" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="0.0" width="375" height="548"/>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    </view>
                                 </subviews>
                                 <constraints>
                                     <constraint firstAttribute="trailing" secondItem="YUk-JM-YzR" secondAttribute="trailing" id="O0L-0s-1P3"/>
@@ -156,6 +160,8 @@
                                     <constraint firstItem="Kop-Is-7Lq" firstAttribute="centerY" secondItem="YUk-JM-YzR" secondAttribute="centerY" id="ZsE-xv-oeI"/>
                                     <constraint firstItem="YUk-JM-YzR" firstAttribute="top" secondItem="5fd-bd-NrU" secondAttribute="top" id="kjT-Cg-amo"/>
                                     <constraint firstItem="YUk-JM-YzR" firstAttribute="leading" secondItem="5fd-bd-NrU" secondAttribute="leading" id="lId-2t-smN"/>
+                                    <constraint firstItem="jSQ-dW-eGE" firstAttribute="height" secondItem="YUk-JM-YzR" secondAttribute="height" id="lOm-Iz-J0H"/>
+                                    <constraint firstItem="jSQ-dW-eGE" firstAttribute="width" secondItem="YUk-JM-YzR" secondAttribute="width" id="o6g-b6-MAp"/>
                                     <constraint firstAttribute="bottom" secondItem="YUk-JM-YzR" secondAttribute="bottom" id="zlN-se-Ba4"/>
                                 </constraints>
                             </scrollView>
@@ -177,6 +183,7 @@
                         <outlet property="backdropImageView" destination="U5n-lQ-ChP" id="BTu-2G-9F2"/>
                         <outlet property="budgetLabel" destination="ydB-Xr-jfO" id="9x6-xY-6aN"/>
                         <outlet property="contentView" destination="YUk-JM-YzR" id="K7F-Wv-OOq"/>
+                        <outlet property="emptyStateView" destination="jSQ-dW-eGE" id="be1-Tf-dUS"/>
                         <outlet property="genresTextLabel" destination="iI1-gU-Dlg" id="AMp-zN-XId"/>
                         <outlet property="genresTitleLabel" destination="BgY-8v-fUb" id="Aa6-Hy-98R"/>
                         <outlet property="homepageLabel" destination="mW3-Z4-mJv" id="fTD-UB-YSD"/>
