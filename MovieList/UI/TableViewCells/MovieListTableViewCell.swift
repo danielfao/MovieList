@@ -71,12 +71,9 @@ class MovieListTableViewCell: UITableViewCell {
     
     // MARK: - Setup cell
     func setupCell(movies: Movie) {
-        if movies.posterImage != nil {
-            self.posterView.image = movies.posterImage
-        } else {
-            self.posterView.image = ImageConstants.EmptyStateImage
+        if let posterUrl = movies.posterUrl {
+            self.downloadPosterImage(url: posterUrl)
         }
-        
         self.titleLabel.text = movies.title
         self.releaseDataLabel.text = String(format: String.localize("release_date_text"), movies.releaseDate)
         
@@ -86,4 +83,7 @@ class MovieListTableViewCell: UITableViewCell {
         self.genreLabel.text = "\(movies.genres.joined(separator: ", "))"
     }
     
+    private func downloadPosterImage(url: URL) {
+        self.posterView.kf.setImage(with: url, placeholder: ImageConstants.EmptyStateImage)
+    }
 }

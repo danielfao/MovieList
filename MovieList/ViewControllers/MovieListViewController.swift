@@ -29,7 +29,6 @@ class MovieListViewController: UIViewController {
     
     // MARK: - Variables
     private var movies: [Movie] = []
-    private let dispatchGroup = DispatchGroup()
     
     // MARK: - Life Cycle
     override func viewDidLoad() {
@@ -38,22 +37,29 @@ class MovieListViewController: UIViewController {
         // Navigation Bar
         self.navigationItem.title = String.localize("navigation_movie_list_title")
         
+        self.loaderView.loaderIsEnabled(status: true)
+        
+        self.getMovies()
+    }
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
         // Notifications
         NotificationCenter.default.addObserver(self, selector: #selector(internetConnected), name: .InternetConnectionReachable, object: nil)
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
         
-        self.loaderView.loaderIsEnabled(status: true)
-       
-        self.getMovies()
-        
-        self.dispatchGroup.notify(queue: .main) {
-            self.loaderView.loaderIsEnabled(status: false)
-        }
+        // Notifications
+        NotificationCenter.default.removeObserver(self, name: .InternetConnectionReachable, object: nil)
     }
     
     // MARK: - Functions
     private func getMovies() {
+        let dispatchGroup = DispatchGroup()
+        dispatchGroup.enter()
         MovieListService.getMovieList { (movies) in
-            self.dispatchGroup.enter()
             self.movies = movies
             if movies.isEmpty {
                 self.showEmptyState()
@@ -62,7 +68,11 @@ class MovieListViewController: UIViewController {
                 self.hideEmptyState()
                 self.tableView.reloadData()
             }
-            self.dispatchGroup.leave()
+            dispatchGroup.leave()
+        }
+        
+        dispatchGroup.notify(queue: .main) {
+            self.loaderView.loaderIsEnabled(status: false)
         }
     }
     
@@ -100,13 +110,10 @@ extension MovieListViewController: UITableViewDataSource {
 // MARK: - UITableViewDelegate
 extension MovieListViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        let movies = self.movies[indexPath.row]
-        movies.downloadPosterImage { (image) in
-            guard let cell = self.tableView.cellForRow(at: indexPath) as? MovieListTableViewCell else {
-                return
-            }
-            cell.setupCell(movies: movies)
+        guard let cell = self.tableView.cellForRow(at: indexPath) as? MovieListTableViewCell else {
+            return
         }
+        cell.setupCell(movies: self.movies[indexPath.row])
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {

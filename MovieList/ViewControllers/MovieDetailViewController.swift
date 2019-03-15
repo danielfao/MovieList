@@ -139,7 +139,9 @@ class MovieDetailViewController: UIViewController {
                     self.emptyStateView.configureEmptyState(title: EmptyStateMessage.NoInternetConnection, message: EmptyStateMessage.NoInternetConnectionMessage, image: ImageConstants.EmptyStateAlert, messageShouldShow: true)
                 } else {
                     self.hideEmptyState()
-                    self.posterImageView.image = movie.posterImage
+                    if let posterUrl = movie.posterUrl {
+                        self.downloadPosterImage(url: posterUrl)
+                    }
                     if let backdropUrl = movie.backDropUrl {
                         self.downloadBackdropImage(url: backdropUrl)
                     }
@@ -154,7 +156,7 @@ class MovieDetailViewController: UIViewController {
                     self.genresTextLabel.text = "\(movie.genres.joined(separator: ", "))"
                     if let budget = movie.budget {
                         if budget != 0 {
-                            let budgetFormatted = self.currencyFormatter(value: budget)
+                            let budgetFormatted = self.valueCurrencyFormatter(value: budget)
                             self.budgetLabel.text = String(format: String.localize("budget_text"), budgetFormatted)
                         } else {
                             self.budgetLabel.text = String.localize("budget_not_provided")
@@ -162,7 +164,7 @@ class MovieDetailViewController: UIViewController {
                     }
                     if let revenue = movie.revenue {
                         if revenue != 0 {
-                            let revenueFormatted = self.currencyFormatter(value: revenue)
+                            let revenueFormatted = self.valueCurrencyFormatter(value: revenue)
                             self.revenueLabel.text = String(format: String.localize("revenue_text"), revenueFormatted)
                         } else {
                             self.revenueLabel.text = String.localize("revenue_not_provided")
@@ -179,7 +181,16 @@ class MovieDetailViewController: UIViewController {
         }
     }
 
-    private func currencyFormatter(value: Any) -> String {
+    private func downloadBackdropImage(url: URL) {
+        self.backdropImageView.kf.setImage(with: url)
+    }
+    
+    private func downloadPosterImage(url: URL) {
+        self.posterImageView.kf.setImage(with: url, placeholder: ImageConstants.EmptyStateImage)
+    }
+    
+    // MARK: - Layout
+    private func valueCurrencyFormatter(value: Any) -> String {
         let formatter = NumberFormatter()
         formatter.numberStyle = .currency
         formatter.locale = Locale(identifier: "en_US")
@@ -188,10 +199,6 @@ class MovieDetailViewController: UIViewController {
             return ""
         }
         return valueFormatted
-    }
-
-    private func downloadBackdropImage(url: URL) {
-        self.backdropImageView.kf.setImage(with: url)
     }
     
     private func showEmptyState() {
